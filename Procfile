@@ -1,1 +1,1 @@
-pipenv run server.py
+web:gunicorn app:server.py
