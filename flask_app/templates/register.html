@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="register">
+          <form action="/user/create" method="post">
+                    <div class="mb-3">
+                              {% for message in get_flashed_messages(category_filter='error_first_name') %}
+                              <p class ='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                              <label for="first_name" class="form-label">First Name</label>
+                              <input type="text" class="form-control" id="first_name" name = "first_name">
+                    </div>
+                    <div class="mb-3">
+                              {% for message in get_flashed_messages(category_filter='error_last_name') %}
+                              <p class ='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                              <label for="last_name" class="form-label">Last Name</label>
+                              <input type="text" class="form-control" id="last_name" name = "last_name">
+                    </div>
+                    <div class="mb-3">
+                              {% for message in get_flashed_messages(category_filter='error_email') %}
+                              <p class ='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                              <label for="email" class="form-label">Email</label>
+                              <input type="text" class="form-control" id="email" name = "email">
+                    </div>
+                    <div class="mb-3">
+                              {% for message in get_flashed_messages(category_filter='error_pw') %}
+                              <p class ='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                              <label for="pw" class="form-label">Password</label>
+                              <input type="password" class="form-control" id="pw_reg" name = "pw">
+                    </div>
+                    <div class="mb-3">
+                              {% for message in get_flashed_messages(category_filter='error_confirm_pw') %}
+                              <p class ='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                              <label for="confirm_pw" class="form-label">Confirm Password</label>
+                              <input type="password" class="form-control" id="confirm_pw" name = "confirm_pw">
+                    </div>
+                    <button class="btn btn-success">Create User</button>
+                    <a href="/" class="btn btn-secondary">Login</a>
+          </form>
+</div>
+{% endblock content %}

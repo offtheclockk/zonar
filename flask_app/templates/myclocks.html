@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+          <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                    <a href="/"
+                              class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                              <svg class="bi me-2" width="40" height="32">
+                                        <use xlink:href="#bootstrap"></use>
+                              </svg>
+                              <span class="fs-4">Welcome {{user.first_name}} !</span>
+                              {% for message in get_flashed_messages(category_filter='error_dfwm') %}
+                              <p class='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                    </a>
+
+                    <ul class="nav nav-pills">
+                              <li class="nav-item"><a href="/dashboard" class="nav-link active" aria-current="page">Dashboard</a>
+                              </li>
+                              <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+          </header>
+          {% if clocks %}
+                    {% for clock in clocks %}
+                              {% if clock.user_id != user.id %}
+          <h3>This is your clock submitted on {{clock.created_at}}!</h3>
+          <table class="table">
+                    <thead>
+                              <tr>
+                                        <th scope="col">Drive Time</th>
+                                        <th scope="col">Work Time</th>
+                                        <th scope="col">Off Time</th>
+                                        <th scope="col">Total Time</th>
+                                        <th scope="col">Violation Status</th>
+                              </tr>
+                    </thead>
+                    <tbody>
+                              <tr>
+                                        {% if clock.off_clock >= 10 %}
+                                        <td scope="row">0</td>
+                                        <td scope="row">0</td>
+                                        <td scope="row">{{clock.off_clock}}</td>
+                                        <td scope="row">0</td>
+                                        <td scope="row">OK</td>
+                                        {% else %}
+                                        <td scope="row">{{clock.drive_clock}}</td>
+                                        <td scope="row">{{clock.work_clock}}</td>
+                                        <td scope="row">{{clock.off_clock}}</td>
+                                        <td scope="row">{{clock.time_value}}</td>
+                                                  {% if (clock.drive_clock/60) > 11 %}
+                                        <td scope="row">V</td>
+                                                  {% elif (clock.work_clock) > 14 %}
+                                        <td scope="row">V</td>
+                                                  {% else %}
+                                        <td scope="row">OK</td>
+                                                  {% endif %}
+                                        {% endif %}
+                              </tr>
+                    </tbody>
+          </table>
+                              {% else %}
+          <h1>There are no clocks yet!</h1>
+                              {% endif %}
+                    {% endfor %}
+          {% endif %}
+{% endblock content %}

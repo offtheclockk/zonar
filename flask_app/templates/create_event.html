@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+          <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                    <a href="/"
+                              class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                              <svg class="bi me-2" width="40" height="32">
+                                        <use xlink:href="#bootstrap"></use>
+                              </svg>
+                              <span class="fs-4">Welcome {{user.first_name}} !</span>
+                              {% for message in get_flashed_messages(category_filter='error_dfwm') %}
+                              <p class='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                    </a>
+
+                    <ul class="nav nav-pills">
+                              <li class="nav-item"><a href="/dashboard" class="nav-link active"
+                                                  aria-current="page">Dashboard</a>
+                              </li>
+                              <li class="nav-item"><a href="/myclocks" class="nav-link">My Clocks</a></li>
+                              <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+          </header>
+          <div class="create_event">
+                    <form action="/process/create_event" method="post">
+                              <div class="mb-3">
+                                        {% for message in get_flashed_messages(category_filter='error_time1') %}
+                                        <p class='{{ category }}'>{{ message }}</p>
+                                        {% endfor %}
+                                        {% for message in get_flashed_messages(category_filter='error_time2') %}
+                                        <p class='{{ category }}'>{{ message }}</p>
+                                        {% endfor %}
+                                        <h1>Drive Time</h1>
+                                        <label for="D" class="form-label">Hours</label>
+                                        <input type="number" class="form-control" id="D" name="D" value="0">
+                                        <label for="D1" class="form-label">Minutes</label>
+                                        <input type="number" class="form-control" id="D1" name="D1" min="0" max="59" step="15" value="0">
+                                        <H1>Work Time</H1>
+                                        <label for="W" class="form-label">Hours</label>
+                                        <input type="number" class="form-control" id="W" name="W" value="0">
+                                        <label for="W1" class="form-label">Minutes</label>
+                                        <input type="number" class="form-control" id="W1" name="W1" min="0" max="59" step="15" value="0">
+                                        <H1>Off Time</H1>
+                                        <label for="OFF" class="form-label">Hours</label>
+                                        <input type="number" class="form-control" id="OFF" name="OFF" value="0">
+                                        <label for="OFF1" class="form-label">Minutes</label>
+                                        <input type="number" class="form-control" id="OFF1" name="OFF1" min="0" max="59" step="15" value="0">
+                              </div>
+                              <div class="mb-3">
+                                        <input type="hidden" class="form-control" id="creator_name" name="creator_name" value ="{{user.first_name}} {{user.last_name}}">
+                              </div>
+                              <div>
+                                        <button class="btn btn-success">Create Event</button>
+                              </div>
+                    </form>
+          </div>
+{% endblock content %}

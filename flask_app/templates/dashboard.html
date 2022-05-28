@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+          <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                    <a href="/"
+                              class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                              <svg class="bi me-2" width="40" height="32">
+                                        <use xlink:href="#bootstrap"></use>
+                              </svg>
+                              <span class="fs-4">Welcome {{user.first_name}} !</span>
+                              {% for message in get_flashed_messages(category_filter='error_dfwm') %}
+                              <p class='{{ category }}'>{{ message }}</p>
+                              {% endfor %}
+                    </a>
+
+                    <ul class="nav nav-pills">
+                              <li class="nav-item"><a href="/create/event" class="nav-link active" aria-current="page">Create Event</a>
+                              </li>
+                              <li class="nav-item"><a href="/myclocks" class="nav-link">My Clocks</a></li>
+                              <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+          </header>
+          {% if events %}
+                    {% for event in events %}
+                              {% if event.user_id == user.id %}
+          <h1>These are your events!</h1>
+          <table class="table">
+                    <thead>
+                              <tr>
+                                        <th scope="col">Type of Clock</th>
+                                        <th scope="col">Time Value</th>
+                                        <th scope="col">Violation Status</th>
+                              </tr>
+                    </thead>
+                    <tbody>
+                              <tr>
+                                        <th scope="row">Drive Clock:</th>
+                                        <td>{{"{:,.2f}".format(((event.D*60)+event.D1)/60)}}</td>
+                                        {% if (((event.D*60)+event.D1)/60) > 11 %}
+                                        <td>V</td>
+                                                  {% else %}
+                                        <td>OK</td>
+                                        {% endif %}
+                              </tr>
+                    </tbody>
+                    <tbody>
+                              <tr>
+                                        <th scope="row">Work Clock:</th>
+                                        <td>{{"{:,.2f}".format(((event.D*60)+event.D1)/60+((event.W*60)+event.W1)/60+((event.OFF*60)+event.OFF1)/60)}}</td>
+                                        {% if (((event.D*60)+event.D1)/60+((event.W*60)+event.W1)/60+((event.OFF*60)+event.OFF1)/60) > 14 and ((event.OFF*60)+event.OFF1)/60 < 10%}
+                                        <td>V</td>
+                                                  {% else %}
+                                        <td>OK</td>
+                                        {% endif %}
+                              </tr>
+                    </tbody>
+                    <tbody>
+                              <tr>
+                                        <th scope="row">OFF Clock:</th>
+                                        <td>{{"{:,.2f}".format(((event.OFF*60)+event.OFF1)/60)}}</td>
+                                        {% if (((event.OFF*60)+event.OFF1)/60) >= 10 %}
+                                        <td>OK</td>
+                                                  {% else %}
+                                        <td>OK</td>
+                                        {% endif %}
+                              </tr>
+                    </tbody>
+          </table>
+          <form action="/process/create_clock" method="post">
+                    <div class="mb-3">
+                              <input type="hidden" class="form-control" id="drive_clock" name="drive_clock" value ="{{ (((event.D*60)+event.D1)/60)|float }}">
+                              <input type="hidden" class="form-control" id="work_clock" name="work_clock" value ="{{ (((event.D*60)+event.D1)/60+((event.W*60)+event.W1)/60+((event.OFF*60)+event.OFF1)/60)|float }}">
+                              <input type="hidden" class="form-control" id="off_clock" name="off_clock" value ="{{ (((event.OFF*60)+event.OFF1)/60)|float }}">
+                              <input type="hidden" class="form-control" id="violation_status" name="violation_status" value ="TBD">
+                              <input type="hidden" class="form-control" id="time_value" name="time_value" value ="{{ (((event.D*60)+event.D1)/60+((event.W*60)+event.W1)/60+((event.OFF*60)+event.OFF1)/60)|float }}">
+                              <input type="hidden" class="form-control" id="user_id" name="user_id" value ="{{user.id}}">
+                    </div>
+                    <div>
+                              <button class="btn btn-success">Submit For Approval</button>
+                              <a href="/edit_event/{{event.id}}" class="btn btn-primary">Edit</a>
+                              <a href="/delete/{{event.id}}" class="btn btn-danger">Delete</a>
+                    </div>
+          </form>
+                              {% else %}
+          <h1>There are no events yet!</h1>
+                              {% endif %}
+                    {% endfor %}
+          {% endif %}
+{% endblock content %}

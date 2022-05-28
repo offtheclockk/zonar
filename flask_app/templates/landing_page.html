@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+          <h1>Sign Up Today For Some Amazing Content!</h1>
+
+          <div class="login">
+                    <form action="/user/process_login" method="post">
+                              <div class="mb-3">
+                                        {% for message in get_flashed_messages(category_filter='user_input') %}
+                                        <p class ='{{ category }}'>{{ message }}</p>
+                                        {% endfor %}
+                                        <label for="user_input" class="form-label">Email address</label>
+                                        <input type="text" class="form-control" id="user_input" name = "user_input">
+                              </div>
+                              <div class="mb-3">
+                                        {% for message in get_flashed_messages(category_filter='pw') %}
+                                        <p class ='{{ category }}'>{{ message }}</p>
+                                        {% endfor %}
+                                        <label for="pw" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="pw" name ="pw">
+                              </div>
+                              <button class="btn btn-success">Login</button>
+                              <a href="/register" class="btn btn-secondary">Register</a>
+                    </form>
+          </div>
+{% endblock content %}
