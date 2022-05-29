@@ -63,13 +63,13 @@ class User:
           def validate_user(data):
                     is_valid = True
 
-                    if len(data['first_name']) < 2:
+                    if len(data['first_name']) < 1:
                               is_valid = False
-                              flash('First name must be greater than 2 characters', "error_first_name")
+                              flash('First name must be greater than 1 character', "error_first_name")
 
-                    if len(data['last_name']) < 2:
+                    if len(data['last_name']) < 1:
                               is_valid = False
-                              flash('Last name must be greater than 2 characters', "error_last_name")
+                              flash('Last name must be greater than 1 character', "error_last_name")
 
                     if len(data['email']) < 2:
                               is_valid = False
