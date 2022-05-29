@@ -33,18 +33,18 @@
                                         <label for="D" class="form-label">Hours</label>
                                         <input type="number" class="form-control" id="D" name="D" value="{{event.D}}">
                                         <label for="D1" class="form-label">Minutes</label>
-                                        <input type="number" class="form-control" id="D1" name="D1" max="59" value="{{event.D1}}">
+                                        <input type="number" class="form-control" id="D1" name="D1" min="0" max="59" step="15" value="0">
                                         <H1>Work Time</H1>
                                         <label for="W" class="form-label">Hours</label>
                                         <input type="number" class="form-control" id="W" name="W" value="{{event.W}}">
                                         <label for="W1" class="form-label">Minutes</label>
-                                        <input type="number" class="form-control" id="W1" name="W1" max="59" value="{{event.W1}}">
+                                        <input type="number" class="form-control" id="W1" name="W1" min="0" max="59" step="15" value="0">
                                         <H1>Off Time</H1>
                                         <label for="OFF" class="form-label">Hours</label>
                                         <input type="number" class="form-control" id="OFF" name="OFF" value="{{event.OFF}}">
                                         <label for="OFF1" class="form-label">Minutes</label>
-                                        <input type="number" class="form-control" id="OFF1" name="OFF1" max="59" value="{{event.OFF1}}">
-                                        <input type="hidden" class="form-control" id="id" name="id" max="59" value="{{event.id}}">
+                                        <input type="number" class="form-control" id="OFF1" name="OFF1" min="0" max="59" step="15" value="0">
+                                        <input type="hidden" class="form-control" id="id" name="id" value="{{event.id}}">
                               </div>
                               <div>
                                         <button class="btn btn-success">Create Event</button>
