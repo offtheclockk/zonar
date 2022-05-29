@@ -22,11 +22,6 @@ def process_create_clock():
 
           return redirect('/dashboard')
 
-@app.route('/add_value')
-def add_value():
-          model_clock.Clock.add_value()
-          return redirect('/dashboard')
-
 @app.route('/process/edit_clock', methods=['POST'])
 def process_edit_clock():
           print(request.form)
@@ -40,7 +35,7 @@ def process_edit_clock():
                     "user_id": session['uuid']
           }
 
-          band_id = model_clock.Clock.update_one(data)
+          clock_id = model_clock.Clock.update_one(data)
 
           return redirect('/dashboard')
 
@@ -55,17 +50,6 @@ def myclocks():
           clocks = Clock.get_user_clocks()
           return render_template("myclocks.html", user = user, clocks = clocks)
 
-@app.route('/create/clock')
-def createclock():
-          if 'uuid' not in session:
-                    return redirect('/')
-          data={
-                    'id':session['uuid']
-          }
-          user = User.get_one(data)
-          clocks = Clock.get_all_clocks()
-          return render_template("create_clock.html", user = user, clocks = clocks)
-
 @app.route('/clocks/<int:id>')
 def show(id):
           data = {
@@ -74,7 +58,7 @@ def show(id):
           clock = Clock.get_content(id=id)
           user = User.get_one(data)
           print(user)
-          return render_template("clocks.html", band = clock, user = user)
+          return render_template("clocks.html", clock = clock, user = user)
 
 @app.route('/edit/<int:id>')
 def editclock(id):
